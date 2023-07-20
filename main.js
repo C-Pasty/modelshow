@@ -10,7 +10,7 @@ function onYouTubeIframeAPIReady() {
   player = new YT.Player("player", {
     height: "360",
     width: "640",
-    videoId: "smMjyIJPMNI",
+    videoId: "9lEDi6e_wK8", // Play the specified video directly
     events: {
       onReady: onPlayerReady,
       onStateChange: onPlayerStateChange,
@@ -18,30 +18,19 @@ function onYouTubeIframeAPIReady() {
   });
 }
 
-// When the player is ready, start playing the first video
+// When the player is ready, start playing the video
 function onPlayerReady(event) {
   event.target.playVideo();
 }
 
-// When the video state changes, check if it has ended and play the next video
+// When the video state changes, check if it has ended and replay the video
 function onPlayerStateChange(event) {
   if (event.data == YT.PlayerState.ENDED) {
-    // Check if the current video is the first video
-    if (player.getVideoData().video_id === "smMjyIJPMNI") {
-      // Play the second video
-      player.loadVideoById("9lEDi6e_wK8");
-    } else {
-      // Play the first video
-      player.loadVideoById("smMjyIJPMNI");
-    }
+    // Replay the same video
+    player.seekTo(0); // Seek to the beginning of the video
+    player.playVideo();
   }
 }
 
-// Loop the videos
-function loopVideos() {
-  // Play the first video
-  player.loadVideoById("smMjyIJPMNI");
-}
-
-// Call the loopVideos function to start the looping
-loopVideos();
+// Call the onYouTubeIframeAPIReady function to initialize the YouTube player
+onYouTubeIframeAPIReady();
